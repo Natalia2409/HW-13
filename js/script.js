@@ -1,10 +1,10 @@
 const btn = document.getElementById('btn');
 const place = document.getElementById('place');
-const place1 = document.getElementById('place1');
 const up = document.getElementById('up');
 const down = document.getElementById('down');
-let fontSize;
-let value;
+const place1 = document.getElementById('place1');
+let fontSize = 14;
+let plus;
 
 function* createIdGenerator() {
     for (let i = 1; i < Infinity; i++) {
@@ -14,15 +14,20 @@ function* createIdGenerator() {
 const idGenerator = createIdGenerator();
 
 
-function* newFontGenerator() {
-    fontSize = 14;
-    if(value === 'up') {
-        yield fontSize += 2;
-    } else {
-        yield fontSize -= 2;
-    }
+function* funcUp() {
+    while (plus === true) {
+        yield (fontSize += 2);
+    } 
 }
-const fontGenerator = newFontGenerator();
+const fontUp = funcUp();
+
+function* funcDown() {
+    while (plus === false) {
+        yield (fontSize -= 2);
+    } 
+}
+const fontDown = funcDown();
+
 
 
 btn.addEventListener('click', () => {
@@ -31,13 +36,14 @@ btn.addEventListener('click', () => {
 });
 
 up.addEventListener('click', () => {
-    value = 'up';
-    console.log(value);
-    console.log(fontSize);
-    place1.style.fontSize = `${fontGenerator.next().value}px`;
+    plus = true;
+    place1.style.fontSize = `${fontUp.next().value}px`;
 });
 
-
+down.addEventListener('click', () => {
+    plus = false;
+    place1.style.fontSize = `${fontDown.next().value}px`;
+});
 
 
 
