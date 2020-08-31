@@ -14,21 +14,16 @@ function* createIdGenerator() {
 const idGenerator = createIdGenerator();
 
 
-function* funcUp() {
-    while (plus === true) {
-        yield (fontSize += 2);
+function* changeFontSize() {
+    while (true) {
+        if (plus === true) {
+            yield (fontSize += 2);
+        } else {
+            yield (fontSize -= 2);
+        }
     } 
 }
-const fontUp = funcUp();
-
-function* funcDown() {
-    while (plus === false) {
-        yield (fontSize -= 2);
-    } 
-}
-const fontDown = funcDown();
-
-
+const fontChange = changeFontSize();
 
 btn.addEventListener('click', () => {
     place.style.display = 'block';
@@ -37,13 +32,12 @@ btn.addEventListener('click', () => {
 
 up.addEventListener('click', () => {
     plus = true;
-    place1.style.fontSize = `${fontUp.next().value}px`;
+    place1.style.fontSize = `${fontChange.next().value}px`;
 });
 
 down.addEventListener('click', () => {
     plus = false;
-    place1.style.fontSize = `${fontDown.next().value}px`;
+    place1.style.fontSize = `${fontChange.next().value}px`;
 });
-
 
 
